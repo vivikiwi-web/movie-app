@@ -1,14 +1,19 @@
 import React from 'react';
-import PropTypes from 'prop-types';
+import PropTypes, { arrayOf } from 'prop-types';
 import "./Movie.scss";
 
-const Movie = ({ id, title, summary, poster, year, slug }) => {
+const Movie = ({ id, title, summary, poster, year, slug, genres }) => {
 	return (
 		<div className="movie">
 			<img src={poster} alt={title} title={title} />
 			<div className="movie__column">
 				<h3 className="movie__title">{title}</h3>
 				<h5 className="movie__year">{year}</h5>
+				<ul className="genred">
+					{genres.map( (genre, index) => {
+						return <li key={index}>{genre}</li>
+					})}
+				</ul>
 				<p className="movie__summary">{summary}</p>
 			</div>
 		</div>
@@ -22,6 +27,7 @@ Movie.propTypes = {
 	poster: PropTypes.string.isRequired,
 	year: PropTypes.number.isRequired,
 	slug: PropTypes.string.isRequired,
+	genres: PropTypes.arrayOf(PropTypes.string).isRequired,
 };
 
 export default Movie;
