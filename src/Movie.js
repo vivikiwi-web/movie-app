@@ -9,7 +9,7 @@ const Movie = ({ id, title, summary, poster, year, slug, genres }) => {
 			<div className="movie__column">
 				<h3 className="movie__title">{title}</h3>
 				<h5 className="movie__year">{year}</h5>
-				<ul className="genred">
+				<ul className="movie__genres">
 					{genres.map( (genre, index) => {
 						return <li key={index}>{genre}</li>
 					})}
