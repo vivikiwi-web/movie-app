@@ -3,31 +3,27 @@ import React from "react";
 class App extends React.Component {
 
   state = {
-    count: 0,
+    isLoading: true, // loading page state
+    movies: [] // movie list from API
   };
-  
-  add = () => {
-    // this.setState({count: this.state.count - 1}); 
-    this.setState( current => (
-      { count: current.count + 1 }
-    ) );
-  }
 
-  minus = () => {
-    // this.setState({count: this.state.count - 1});
-    this.setState( current => (
-      { count: current.count - 1 }
-    ));
+  /**
+   * When page is rendered call this method (default by ReactJs)
+   */
+  componentDidMount() {
+    setTimeout( () => this.setState({isLoading: false}), 6000);
   }
 
   render() {
+
+    const {isLoading} = this.state;
+
     return (
       <div>
-        <h1>Count: {this.state.count}</h1>
-        <button onClick={this.add}>Plus</button>
-        <button onClick={this.minus}>Minus</button>
+        { isLoading ? "loading.." : "Page loaded" }
       </div>
     )
+
   }
 
 }
