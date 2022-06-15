@@ -1,4 +1,5 @@
 import React from "react";
+import axios from "axios";
 
 class App extends React.Component {
 
@@ -7,22 +8,26 @@ class App extends React.Component {
     movies: [] // movie list from API
   };
 
+  getMovies = async () => {
+    const movies = await axios.get('https://yts.mx/api/v2/list_movies.json');
+  }
+
   /**
    * When page is rendered call this method (default by ReactJs)
    */
-  componentDidMount() {
+  asynccomponentDidMount() {
+    this.getMovies();
     setTimeout( () => this.setState({isLoading: false}), 6000);
   }
-
   render() {
 
     const {isLoading} = this.state;
 
     return (
       <div>
-        { isLoading ? "loading.." : "Page loaded" }
+        { isLoading ? "Loading.." : "Page loaded" }
       </div>
-    )
+    );
 
   }
 
