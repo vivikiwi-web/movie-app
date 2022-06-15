@@ -1,5 +1,6 @@
 import React from "react";
 import axios from "axios";
+import Movie from './Movie';
 
 class App extends React.Component {
 
@@ -9,23 +10,30 @@ class App extends React.Component {
   };
 
   getMovies = async () => {
-    const movies = await axios.get('https://yts.mx/api/v2/list_movies.json');
+    const {
+      data: {
+        data: {movies}
+      }
+    } = await axios.get('https://yts.mx/api/v2/list_movies.json?sort_by=rating');
+    this.setState({ movies, isLoading: false })
   }
 
   /**
    * When page is rendered call this method (default by ReactJs)
    */
-  asynccomponentDidMount() {
+  componentDidMount() {
     this.getMovies();
-    setTimeout( () => this.setState({isLoading: false}), 6000);
   }
   render() {
 
-    const {isLoading} = this.state;
+    const {isLoading, movies} = this.state;
 
     return (
       <div>
-        { isLoading ? "Loading.." : "Page loaded" }
+        { isLoading ? "Loading.." : movies.map( movie => {
+            return <Movie key={movie.id} id={movie.id} title={movie.title} summary={movie.summary} poster={movie.medium_cover_image} year={movie.year} slug={movie.slug} />
+          })
+        }
       </div>
     );
 
